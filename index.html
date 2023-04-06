@@ -15,16 +15,16 @@
         const code = urlParams.get('code');
         if (code) {
             console.log('Код авторизации:', code);
+			fetch('http://31.31.203.206:9027/getCode?code=' + code, {method: "POST"})
+			.then(response => response.text())
+			.then(code => {
+				console.log(code);
+				// здесь вы можете выполнить нужные действия с полученным кодом
+			})
+			.catch(error => {
+				console.error(error);
+			});
         }
-		fetch('http://31.31.203.206:9027/getCode?code=' + code, {method: "POST"})
-		.then(response => response.text())
-		.then(code => {
-			console.log(code);
-			// здесь вы можете выполнить нужные действия с полученным кодом
-		})
-		.catch(error => {
-			console.error(error);
-		});
     </script>
 </body>
 </html>
