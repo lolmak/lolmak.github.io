@@ -7,22 +7,14 @@
 <body>
     <h1>Авторизация через Discord</h1>
     <p>Нажмите на кнопку ниже, чтобы авторизоваться через Discord:</p>
-    <a href="https://discord.com/oauth2/authorize?client_id=690148615968391168&redirect_uri=https%3A%2F%2Flolmak.github.io&response_type=code&scope=identify">Авторизоваться через Discord</a>
-    
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <a href="https://discord.com/oauth2/authorize?client_id=690148615968391168&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&response_type=code&scope=identify">Авторизоваться через Discord</a>
+
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
-		const express = require('express');
-		const app = express();
-
-        app.get('/getCode', (req, res) => {
-			res.send(code);
-		});
-
-		app.listen(3000, () => {
-			console.log('Сервер запущен на порту 3000');
-		});
+        if (code) {
+            console.log('Код авторизации:', code);
+        }
     </script>
 </body>
 </html>
