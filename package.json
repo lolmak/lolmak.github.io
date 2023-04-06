@@ -1,0 +1,22 @@
+{
+  "name": "lolmak.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lolmak.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lolmak.github.io/issues"
+  },
+  "homepage": "https://github.com/lolmak.github.io#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

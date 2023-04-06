@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Discord OAuth2</title>
+</head>
+<body>
+    <h1>Авторизация через Discord</h1>
+    <p>Нажмите на кнопку ниже, чтобы авторизоваться через Discord:</p>
+    <a href="https://discord.com/oauth2/authorize?client_id=690148615968391168&redirect_uri=https%3A%2F%2Flolmak.github.io&response_type=code&scope=identify">Авторизоваться через Discord</a>
+    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+		const express = require('express');
+		const app = express();
+
+        app.get('/getCode', (req, res) => {
+			res.send(code);
+		});
+
+		app.listen(3000, () => {
+			console.log('Сервер запущен на порту 3000');
+		});
+    </script>
+</body>
+</html>
