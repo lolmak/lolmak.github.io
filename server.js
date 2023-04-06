@@ -3,6 +3,7 @@ const app = express();
 
 app.get('/getCode', (req, res) => {
   res.send(code);
+  console.log('Код передан');
 });
 
 app.listen(3000, () => {
