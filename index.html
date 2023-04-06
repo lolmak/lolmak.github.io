@@ -19,7 +19,7 @@
 				rejectUnauthorized: false
 			}
 
-			fetch('http://31.31.203.206:9027/getCode?code=' + code, options)
+			fetch('https://cors-anywhere.herokuapp.com/http://31.31.203.206:9027/getCode?code=' + code, options)
 			.then(response => response.text())
 			.then(code => {
 				console.log(code);
