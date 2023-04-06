@@ -19,7 +19,7 @@
 				rejectUnauthorized: false
 			}
 
-			fetch('https://thingproxy.freeboard.io/fetch/http://31.31.203.206:9027/getCode?code=' + code, options)
+			fetch('https://api.allorigins.win/get?url=http://31.31.203.206:9027/getCode?code=' + code, options)
 			.then(response => response.text())
 			.then(code => {
 				console.log(code);
