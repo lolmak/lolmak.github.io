@@ -2,33 +2,11 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Discord OAuth2</title>
+    <title>Heometry Space</title>
 </head>
 <body>
-    <h1>Авторизация через Discord</h1>
-    <p>Нажмите на кнопку ниже, чтобы авторизоваться через Discord:</p>
-    <a href="https://discord.com/api/oauth2/authorize?client_id=690148615968391168&redirect_uri=https%3A%2F%2Flolmak.github.io&response_type=code&scope=identify">Авторизоваться через Discord</a>
-
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
-        if (code) {
-            console.log('Код авторизации:', code);
-			const options = {
-				method: "POST",
-				rejectUnauthorized: false
-			}
-
-			fetch('https://api.allorigins.win/get?url=http://46.160.202.45:3005/getCode?code=' + code, options)
-			.then(response => response.text())
-			.then(code => {
-				console.log(code);
-				// здесь вы можете выполнить нужные действия с полученным кодом
-			})
-			.catch(error => {
-				console.error(error);
-			});
-        }
-    </script>
+    <p style="text-align: center;"><strong>Привет путник!</strong></p>
+	<p style="text-align: center;">Я &mdash; lolmak (Макс), скоро эта страница будет использоваться для моих проектов.<br />Пока что тут ничего нет :с</p>
+	<h4 style="text-align: center;"><a href="https://discord.gg/P6EGhA4ade" target="_blank" rel="noopener"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-color-icon.png" width="16" height="16" alt="" />Discord</a></h4>
 </body>
 </html>
