@@ -105,3 +105,35 @@ input[type="checkbox"] {
     display: block;  /* Убираем лишние отступы */
     margin: 0 auto;  /* Центрируем по горизонтали */
 }
+
+.closeFooter {
+    color: #366329;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.closeFooter:hover {
+    color: #80ff00;
+}
+
+.noFooter {
+    color: #aaa;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.noFooter:hover {
+    color: #000;
+}
+
+.proof{
+	color: #cc8a19;
+	display: none;
+	font-weight: bold;
+}
+
+.proofVideo{
+	display: none;
+}
