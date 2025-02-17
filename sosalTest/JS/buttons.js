@@ -32,8 +32,9 @@ closeButtonYes.addEventListener('click', function() {
 
 // Закрытие модального окна при клике вне его области
 window.addEventListener('click', function(event) {
-	const resultText = document.querySelector('.result');
-	resultText.textContent = 'Вы сосали!';
+	if (event.target === modal) {
+        modal.style.display = 'none';
+	}
 });
 
 NoSosalB.addEventListener('click', function() {
