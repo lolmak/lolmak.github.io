@@ -33,7 +33,7 @@ closeButtonYes.addEventListener('click', function() {
 // Закрытие модального окна при клике вне его области
 window.addEventListener('click', function(event) {
 	const resultText = document.querySelector('.result');
-	resultText.textContent = 'Вы победили!';
+	resultText.textContent = 'Ты сосал!';
 });
 
 NoSosalB.addEventListener('click', function() {
