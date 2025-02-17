@@ -47,30 +47,30 @@ label {
 }
 
 input[type="checkbox"] {
-    width: 20px;  /* Увеличение ширины */
-    height: 20px; /* Увеличение высоты */
-    transform: scale(1.5); /* Увеличение чекбокса */
-    margin-right: 10px; /* Добавляет отступ между чекбоксом и текстом */
+    width: 20px;
+    height: 20px;
+    transform: scale(1.5);
+    margin-right: 10px;
     cursor: pointer;
 }
 
 .modal {
-    display: none; /* Скрыто по умолчанию */
+    display: none;
     position: fixed;
     z-index: 1;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal-content {
     background-color: #fff;
-    margin: 15% auto; /* Центрирование */
+    margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 450px; /* Ширина окна */
+    width: 450px;
     text-align: center;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -95,6 +95,13 @@ input[type="checkbox"] {
 
 .modal-content h2,
 .modal-content p {
-    margin: 0; /* Убираем отступы */
-    padding: 0; /* Убираем внутренние отступы */
+    margin: 0;
+    padding: 0;
+}
+
+.small-img {
+    width: 300px;  /* Уменьшаем размер */
+    height: auto;  /* Сохраняем пропорции */
+    display: block;  /* Убираем лишние отступы */
+    margin: 0 auto;  /* Центрируем по горизонтали */
 }
