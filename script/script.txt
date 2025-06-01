@@ -1,3 +1,5 @@
+{ app, BrowserWindow, Menu } = require('electron'); const createWindow = () => { | const win = new BrowserWindow({ | width: 960 , | height: 540, | webPreferences: { | nodeIntegration: true, | contextIsolation: false | win.loadFile('./html/index.html') | (async () => { | await app.whenReady().then(() => { | createWindow() | app.on('window-all-closed', () => { | if (process.platform !== 'darwin') app.quit() | <link rel="stylesheet" href="../css/topMenu.css"> | <script src="../scripts/preload.js"></script> | document.addEventListener('click', async (event) => { | if (event.target.closest('.reconnectButton')) { | await event.stopPropagation(); | const timeoutModal = await document.querySelector('.serverTimeoutModal'); | timeoutModal.style.display = 'none';
+
 const { app, BrowserWindow, Menu } = require('electron');
 
 let mainWindow;
@@ -405,3 +407,140 @@ const createWindow = () => {
 .deleteButton:hover {
 	background-color: #ffdddd;
 }
+
+const fs = require('fs-extra');
+const moment = require('moment-timezone');
+const { serverAdress, serverPort } = require('../data/config.js');
+
+const tableContainer = document.querySelector('.tableData');
+
+async function createTableRow(item) {
+	const row = document.createElement('div');
+	row.classList.add('tableRow');
+	row.dataset.id = item.uuid;
+
+	const nameCell = document.createElement('a');
+	nameCell.className = 'rowName colName';
+	nameCell.textContent = item.name;
+
+	const countCell = document.createElement('a');
+	countCell.className = 'rowName colCount';
+	countCell.textContent = item['count_value'];
+	
+	const countType = document.createElement('span');
+	countType.className = 'countType';
+	countType.textContent = item['count_type'];
+
+	const priceCell = document.createElement('a');
+	priceCell.className = 'rowName colPrice';
+	priceCell.textContent = item.price;
+	
+	const priceType = document.createElement('span');
+	priceType.className = 'priceType';
+	priceType.textContent = '₽';
+
+	const dateCell = document.createElement('a');
+	dateCell.className = 'rowName colDate';
+	const date = new Date(item.date);
+	const day = await date.getDate();
+	const year = await date.getFullYear();
+	const monthList = [
+		'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 
+		'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
+	]
+	const month = await date.getMonth();
+	dateCell.textContent = `${day} ${monthList[month]}, ${year}`;
+	
+	const cellFullTime = document.createElement('div');
+	cellFullTime.className = 'rowFullTime';
+	const hours = await date.getHours();
+	const minutes = await date.getMinutes();
+	const seconds = await date.getSeconds();
+	const timezone = moment.tz.guess();
+	const timeZoneNames = {
+		'Europe/Moscow': 'Московское время',
+		'Asia/Krasnoyarsk': 'Красноярское время',
+		'Asia/Yekaterinburg': 'Екатеринбургское время',
+	};
+	const timeZoneName = moment.tz(date, timezone).format('zz');
+	cellFullTime.textContent = `${day} ${monthList[month]}, ${year} ${hours}:${minutes}:${seconds} (${timeZoneNames[timezone] || timezone})`;
+
+	const actionCell = document.createElement('a');
+	actionCell.className = 'rowNameLast colAction';
+
+	const actionIcon = document.createElement('i');
+	actionIcon.className = 'fa-solid fa-ellipsis solid summonActionMenu';
+
+	const actionMenu = document.createElement('div');
+	actionMenu.className = 'rowActionMenu';
+
+	const editButton = document.createElement('button');
+	editButton.className = 'actionMenuButton editButton';
+	editButton.innerHTML = '<i class="fa-solid fa-pencil"></i> Редактировать';
+
+	const deleteButton = document.createElement('button');
+	deleteButton.className = 'actionMenuButton deleteButton';
+	deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i> Удалить';
+
+
+	actionMenu.appendChild(editButton);
+	actionMenu.appendChild(deleteButton);
+	actionCell.appendChild(actionIcon);
+	actionCell.appendChild(actionMenu);
+	countCell.appendChild(countType);
+	priceCell.appendChild(priceType);
+	dateCell.appendChild(cellFullTime);
+
+	row.appendChild(nameCell);
+	row.appendChild(countCell);
+	row.appendChild(priceCell);
+	row.appendChild(dateCell);
+	row.appendChild(actionCell);
+
+	return row;
+}
+
+async function createTable() {
+	let data = false;
+	try {
+		const res = await fetch(`${serverAdress}:${serverPort}/api/store/get?sort=asc&page=1&limit=50&sortType=name`, {
+			method: 'GET',
+			headers: {
+				'Authorization': 'Bearer GSDZ'
+			}
+		});
+
+		data = await res.json();
+	} catch (err) {
+		console.error('Сервер не отвечает: ' + err);
+		await serverStatusErr();
+	}
+	
+	if (!data) {
+		console.error('Ошибка в API. Не удалось получить ответ от сервера!');
+		return;
+	}
+	
+	
+	tableContainer.innerHTML = '';
+	for (const item of data) {
+		const row = await createTableRow(item);
+		tableContainer.appendChild(row);
+	}
+}
+
+module.exports = { createTable };
+
+document.addEventListener('click', async (event) => {
+	if (event.target.closest('.reconnectButton')) {
+        await event.stopPropagation();
+
+        const timeoutModal = await document.querySelector('.serverTimeoutModal');
+		if (timeoutModal) {
+			timeoutModal.style.display = 'none';
+		}
+		serverStatusCheck();
+    }
+});
+
+module.exports = { serverStatusCheck };
