@@ -1,0 +1,407 @@
+const { app, BrowserWindow, Menu } = require('electron');
+
+let mainWindow;
+
+const createWindow = () => {
+	const win = new BrowserWindow({
+		width: 960 ,
+		height: 540,
+		minWidth: 400,  // Минимальная ширина
+		minHeight: 300,
+		webPreferences: {
+			nodeIntegration: true,  // Чтобы работал require() в index.html
+			contextIsolation: false
+		}
+	})
+	
+	// Menu.setApplicationMenu(null);
+	
+	win.loadFile('./html/index.html')
+}
+
+(async () => {
+	await app.whenReady().then(() => {
+		createWindow()
+	})
+	app.on('window-all-closed', () => {
+		if (process.platform !== 'darwin') app.quit()
+	})
+})();
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="Content-Security-Policy" content="script-src 'self' https://kit.fontawesome.com;">
+		<title>GS DorZnak</title>
+		
+		<!--Подключение стилей-->
+		<link rel="stylesheet" href="../css/topMenu.css">
+		
+		<!--Иконки fontawesome-->
+		
+	</head>
+	<body>
+		<div id="topMenu">
+			<a class="topMenuStore active">Склад</a>
+			<a class="topMenuFormulas inactive">Формулы</a>
+			<a class="topMenuCreate inactive">Создание знака</a>
+			<a class="topMenuReports inactive">Отчёты</a>
+		</div>
+		
+		<!--Скрипты для верхнего меню-->
+		<script src="../scripts/preload.js"></script>
+		
+		<!--Блок с панелью управления-->
+		<div id="controlPanel">
+			<button class="controlPanelMenuButton createButton"><i class="fa-solid fa-plus"></i> Создать новый объект</button>
+		</div>
+		
+		<div class="tableHeader">
+			<a class="headerName colName">Наименование</a>
+			<a class="headerName colCount">Кол-во</a>
+			<a class="headerName colPrice">Цена за ед.</a>
+			<a class="headerName colDate">Дата изменения</a>
+			<a class="headerNameLast colAction"></a>
+		</div>
+		
+		<div class="tableData">
+			<!--Временный блок с таблицей>
+			<div class="tableRow" data-id="1">
+				<a class="rowName colName">Типа да</a>
+				<a class="rowName colCount">
+					133
+					<span class="countType">ед.</span>
+				</a>
+				<a class="rowName colPrice">
+					15
+				</a>
+				<a class="rowName colDate">
+					6 апреля, 2025
+					<div class="rowFullTime">
+						6 апреля, 2025 14:28 (Красноярское время)
+					</div>
+				</a>
+				<a class="rowNameLast colAction">
+					<i class="fa-solid fa-ellipsis solid summonActionMenu"></i>
+					<div class="rowActionMenu">
+						<button class="actionMenuButton editButton"><i class="fa-solid fa-pencil"></i> Редактировать</button>
+						<button class="actionMenuButton deleteButton"><i class="fa-solid fa-trash"></i> Удалить</button>
+					</div>
+				</a>
+			</div>
+			<!--Временный блок с таблицей-->
+		</div>
+		
+		<!--Скрипты для таблицы-->
+		<script src="../scripts/actionMenuButtons.js"></script>
+		
+		<!--Окно создания нового объекта-->
+		<div class="storeCreateModal">
+			<div class="storeCreateContent">
+				<div class="storeCreateModalHeader">
+					<i class="fa-solid fa-object-group"></i> Создание нового объекта
+				</div>
+				<div class="storeCreateModalRow">
+					<a class="storeCreateModalName">Наименование:</a>
+					<input class="storeCreateModalLabelName" type="text" name="storeName" minlength="1" maxlength="40"/>
+				</div>
+				<div class="storeCreateModalRow">
+					<a class="storeCreateModalName storeModalCount">Количество:</a>
+					<input class="storeCreateModalLabelValue" type="number" name="storeCount" minlength="1" maxlength="9"/>
+					<select class="storeCreateModalLabelType" name="select">
+						<option value="value1" selected>шт.</option>
+						<option value="value2">м/кв.</option>
+					</select>
+					<a class="storeCreateModalName storeModalPrice">Цена за ед.:</a>
+					<input class="storeCreateModalLabelPrice" type="number" name="storePrice" minlength="1" maxlength="9"/>
+				</div>
+				<div class="storeCreateModalErrRow">
+					<i class="fa-solid fa-triangle-exclamation"></i>
+					<a class="storeCreateModalErrText">Неизвестная ошибка!</a>
+				</div>
+				<div class="storeCreateModalLoader">
+					<div class="loader"></div>
+				</div>
+				<div class="storeCreateModalButtonsRow">
+					<button class="createObjButton"><i class="fa-solid fa-plus"></i> Создать объект</button>
+					<button class="cancelButton"><i class="fa-solid fa-xmark"></i> Отменить создание</button>
+				</div>
+			</div>
+		</div>
+		
+		<!--Окно редактирования объекта-->
+		<div class="storeEditModal">
+			<div class="storeEditContent">
+				<div class="storeEditModalHeader">
+					<i class="fa-solid fa-object-group"></i>Редактирование объекта
+				</div>
+				<div class="storeEditModalRow">
+					<a class="storeEditModalName">Наименование:</a>
+					<input class="storeEditModalLabelName" type="text" name="storeName" minlength="1" maxlength="40"/>
+				</div>
+				<div class="storeEditModalRow">
+					<a class="storeEditModalName storeModalCount">Количество:</a>
+					<input class="storeEditModalLabelValue" type="number" name="storeCount" minlength="1" maxlength="9"/>
+					<select class="storeEditModalLabelType" name="select">
+						<option value="value1" selected>шт.</option>
+						<option value="value2">м/кв.</option>
+					</select>
+					<a class="storeEditModalName storeModalPrice">Цена за ед.:</a>
+					<input class="storeEditModalLabelPrice" type="number" name="storePrice" minlength="1" maxlength="9"/>
+				</div>
+				<div class="storeEditModalErrRow">
+					<i class="fa-solid fa-triangle-exclamation"></i>
+					<a class="storeEditModalErrText">Неизвестная ошибка!</a>
+				</div>
+				<div class="storeEditModalLoader">
+					<div class="editLoader"></div>
+				</div>
+				<div class="storeEditModalButtonsRow">
+					<button class="EditObjButton"><i class="fa-solid fa-pencil"></i> Отредактировать объект</button>
+					<button class="editСancelButton"><i class="fa-solid fa-xmark"></i> Отменить редактирование</button>
+				</div>
+			</div>
+		</div>
+		
+		<div class="storeDeleteModal">
+			<div class="DeleteEditContent">
+				<div class="DeleteEditContentRow">
+					<i class="fa-solid fa-circle-exclamation deleteWarnIcon"></i>
+				</div>
+				<div class="DeleteEditContentRow">
+					<a class="storeDeleteModalTextGeneral">Это действие удалит объект</a>
+				</div>
+				<div class="DeleteEditContentRow">
+					<a class="storeDeleteModalTextName">"Имя объекта"</a>
+				</div>
+				<div class="DeleteEditContentRow">
+					<a class="storeDeleteModalTextFooter">его нельзя будет восстановить</a>
+				</div>
+				<div class="storeDeleteModalButtonsRow">
+					<button class="DeleteObjButton"><i class="fa-solid fa-trash"></i> Удалить</button>
+					<button class="DeleteСancelButton"><i class="fa-solid fa-xmark"></i> Отмена</button>
+				</div>
+			</div>
+		</div>
+		
+		<div class="serverTimeoutModal">
+			<div class="serverTimeoutContent">
+				<div class="serverTimeoutContentRow">
+					<i class="fa-solid fa-circle-exclamation deleteWarnIcon"></i>
+				</div>
+				<div class="serverTimeoutContentRow">
+					<a class="storeDeleteModalTextGeneral">Не удаётся соединиться с сервером</a>
+				</div>
+				<div class="serverTimeoutContentRow">
+					<a class="storeDeleteModalTextFooter">попробуйте снова позже!</a>
+				</div>
+				<div class="serverTimeoutModalButtonsRow">
+					<button class="reconnectButton"><i class="fa-solid fa-rotate"></i> Переподключиться</button>
+				</div>
+			</div>
+		</div>
+		
+		<!--Скрипты для модальных окон-->
+		<script src="../scripts/createStore.js"></script>
+		
+		<footer class="footer">
+			<span class="left-text">
+				<i class="fas fa-code-branch"></i> v 0.0.1
+			</span>
+			<span class="right-text">
+				<i class="fa-solid fa-code"></i> режим разработчика
+			</span>
+		</footer>
+	</body>
+</html>
+
+.headerName {
+	font-weight: bold;
+	border-right: 1px solid #005479;
+	padding: 0 5px;
+}
+
+.rowName {
+	border-right: 1px solid #005479;
+	padding: 0 5px;
+}
+
+.tableRow {
+	display: flex;
+	background-color: #caf2ff;
+	margin: 3px;
+	padding: 3px;
+	border-radius: 3px;
+}
+
+.tableRow:nth-of-type(even) {
+  background-color: #e8f9ff;
+}
+
+.tableRow:last-of-type {
+  margin: 3px 3px 23px 3px;
+}
+
+.headerName:last-child {
+  border-right: none;
+}
+
+.tableHeader {
+	display: flex;
+	background-color: #198cff;
+	margin: 0 3px 3px 3px;
+	padding: 3px;
+}
+
+.colName {
+	width: 45%;
+	white-space: nowrap;   /* Запрет переноса текста */
+    overflow: hidden;      /* Скрытие выходящего за границы текста */
+    text-overflow: ellipsis;
+}
+
+.colCount {
+	width: 18%;
+}
+
+.countType {
+	padding: 3px;
+    color: #646464;
+    font-size: 0.85em;
+}
+
+.colPrice {
+	width: 18%;
+}
+
+.colAddPrice {
+	width: 18%;
+}
+
+.priceType {
+	padding: 3px;
+    color: #646464;
+    font-size: 0.8em;
+}
+
+.colDate {
+	width: 20%;
+	position: relative;
+}
+
+.colAction {
+	width: 30px;
+	text-align: center;
+	cursor: pointer;
+	position: relative;
+}
+
+.solid {
+	padding: 1px 5px;
+}
+
+.solid:hover {
+	color: #f78166;
+}
+
+.rowActionMenu {
+	right: 30px;
+	top: -5px;
+	position: absolute;
+	background: white;
+	border: 1px solid #ccc;
+	padding: 10px;
+	z-index: 10;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+	border-radius: 5px;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	display: none;
+	cursor: default;
+}
+
+.rowActionMenu.active {
+    display: block;
+}
+
+.rowActionMenu.active::after {
+    content: none !important;
+}
+
+.rowActionMenu::before {
+	content: "";
+	position: absolute;
+	top: 7px; /* высота относительно меню */
+	right: -6px; /* выносим стрелочку за границу блока */
+	width: 0;
+	height: 0;
+	border-top: 6px solid transparent;
+	border-bottom: 6px solid transparent;
+	border-left: 6px solid white;
+	border-radius: 20%;
+}
+
+.rowActionMenu.open-up {
+    top: auto;
+    bottom: -5px;
+}
+
+.rowActionMenu.open-up::before {
+	content: "";
+	position: absolute;
+    top: 50px;
+	right: -12px;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 6px solid white;
+    border-right: 6px solid transparent;
+}
+
+.rowFullTime {
+	left: 0;
+	top: 20px;
+	position: absolute;
+	background: white;
+	border: 1px solid #ccc;
+	padding: 7px;
+	z-index: 9;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+	border-radius: 5px;
+	text-align: center;
+	display: flex;
+	gap: 3px;
+	display: none;
+	user-select: none;
+}
+
+.rowFullTime.open-up {
+    top: auto;
+    bottom: 21px;
+}
+
+.actionMenuButton {
+	display: flex;
+	align-items: center;
+	background-color: white;
+	gap: 4px;
+	padding: 5px 7px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	user-select: none;
+}
+
+.actionMenuButton:hover {
+	background-color: #dfdfdf;
+}
+
+.deleteButton {
+	color: #ff8b8b;
+}
+
+.deleteButton:hover {
+	background-color: #ffdddd;
+}
