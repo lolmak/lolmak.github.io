@@ -1,0 +1,82 @@
+@font-face {
+	font-family: "scabber";
+	src: url("../../fonts/scabber.ttf") format("truetype");
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "pizzaHutCYR";
+	src: url("../../fonts/pizzaHutCYR.ttf") format("truetype");
+	font-style: normal;
+	font-display: swap;
+}
+
+html {
+	min-height: 100vh;
+	background-image: url("../../img/background.webp");
+	background-size: cover;
+	background-position: center;
+	background-size: 200%;
+	background-color: #04070b;
+}
+
+@media (max-width: 800px) {
+	html {
+		background-size: 400%;
+	}
+}
+
+body {
+	margin: 0;
+	font-family: "pizzaHutCYR", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.loginBlock {
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.nameBox {
+	justify-content: center; /* по вертикали */
+	align-items: center;     /* по горизонтали */
+	display: inline-flex;
+	padding-inline: 20%;
+	min-height: 10%;
+	background-color: #101010;
+	padding: 20px;
+	margin: 10%;
+	flex-direction: column;
+	border-radius: 10px;
+}
+
+.genName {
+	font-family: "scabber", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+	color: #53c772;
+	font-size: 75px;
+}
+
+.genLabel {
+	color: #53c772;
+	font-size: 28px;
+	margin-top: -15px;
+	padding-bottom: 30px;
+}
+
+.tokenLine {
+	align-self: flex-start;
+	text-align: left;
+	width: 100%;
+}
+
+.tokenLabel {
+	color: #53c772;
+}
+
+.tokenInput {
+	width: 100%;
+	
+}
+
