@@ -1,5 +1,5 @@
-@media (max-aspect-ratio: 9/6) and (min-aspect-ratio: 4/6),
-(max-width: 1300px) and (min-aspect-ratio: 4/6)  {
+@media (max-aspect-ratio: 9/6) and (pointer: fine),
+(max-width: 1300px) and (min-aspect-ratio: 4/6) and (pointer: fine)  {
 	@font-face {
 		font-family: "gabriola";
 		src: url("../../fonts/gabriola.ttf") format("truetype");

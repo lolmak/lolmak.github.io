@@ -1,4 +1,4 @@
-@media (max-aspect-ratio: 4/6) {
+@media (hover: none) and (pointer: coarse) {
 @font-face {
 	font-family: "gabriola";
 	src: url("../../fonts/gabriola.ttf") format("truetype");
