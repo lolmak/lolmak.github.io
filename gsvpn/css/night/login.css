@@ -22,33 +22,187 @@
 	font-display: swap;
 }
 
-
-body {
+body, html {
 	margin: 0;
 	min-height: 100vh;
+}
 
+body {
 	background-image: url("../../img/background.webp");
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
+	background-color: #131313;
 	
 	font-family: "IBMPlexSans", sans-serif;
+	
+	display: grid;
+	grid-template-rows: auto 1fr auto;
 }
+
+.main {
+	display: flex;
+	align-items: center;
+}
+
+/* =========================
+   Header и Footer Default
+   ========================= */
+
+.header {
+	border-bottom: 1px solid #6dfdc0;
+	height: 3.5ch;
+	align-items: center;
+	display: flex;
+	padding: 7px;
+}
+
+.gsHubPanel {
+	border: 1px solid #6dfdc0;
+	border-radius: 20px;
+	height: 100%;
+	aspect-ratio: 1 / 1;
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+	transition: max-width 0.3s;
+	max-width: 3.5ch;
+}
+
+.gsHubPanel:hover {
+	aspect-ratio: auto;
+	cursor: pointer;
+	max-width: 150px;
+}
+
+.gsHubText {
+	color: #6dfdc0;
+	white-space: nowrap;
+	margin: 0 10px 0 7px;
+	user-select: none;
+}
+
+.gsHubIcon {
+	height: 100%;
+}
+
+.gsVpnText {
+	color: #6dfdc0;
+	white-space: nowrap;
+	margin: 0 10px 0 7px;
+	font-family: "gabriola", sans-serif;
+	font-size: 30px;
+	margin-top: 5px;
+}
+
+.gsVpnIcon {
+	height: 100%;
+}
+
+.gsVpnNamePanel {
+	position: relative;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	margin-right: calc(50vw - 61.7px);
+	margin-left: auto;
+}
+
+.footer {
+	border-top: 1px solid #6dfdc0;
+	height: 3.5ch;
+	align-items: center;
+	padding: 7px;
+	display: grid;
+	grid-template-columns: 19% 1fr 19%;
+	line-height: 1;
+}
+
+@media (max-width: 970px) {
+	.footer {
+		grid-template-columns: 1fr;
+		grid-template-rows: auto auto auto;
+		height: auto;
+		row-gap: 10px;
+		padding: 10px 7px;
+	}
+	
+	.mailIcon {
+		margin-top: 0;
+	}
+}
+
+.footerIconFile {
+	fill: #e2fdd0;
+	width: 16px;
+	height: 16px;
+	min-height: 16px;
+	min-width: 16px;
+	user-select: none;
+}
+
+.mailIcon {
+	margin-top: 2px;
+}
+
+.textLink {
+	display: inline-flex;
+	text-decoration: none;
+	align-items: center
+}
+
+.footerTextLink {
+	color: #6dfdc0;
+	text-decoration: none;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.contactRow {
+	display: inline-flex;
+	align-items: center
+}
+
+.footerTextContact {
+	color: #6dfdc0;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.about {
+	text-align: center;
+}
+
+.footerText {
+	color: #e2fdd0;
+	font-weight: bold;
+	font-size: 13px;
+	margin: 0 20px;
+}
+
+.lic, .contact {
+	justify-self: center;
+}
+
+/* =========================
+   Панель входа
+   ========================= */
 
 .panel {
 	width: fit-content;
-	margin: auto 0 auto 17%;
-	position: fixed;
-	transform: translateY(-50%);
-	top: 50%;
+	margin-left: 17%;
+	position: relative;
+	margin-top: 50px;
+	margin-bottom: 50px;
 }
 
 .generalName {
 	color: #6dfdc0;
-	font-family: "gabriola", sans-serif;
-	font-size: 80px;
+	font-size: 60px;
+	font-weight: bold;
 	white-space: nowrap;
 	text-align: center;
+	margin-bottom: 30px;
 }
 
 .loginName {
@@ -59,16 +213,17 @@ body {
 
 .codeInput {
 	width: 97%;
-	font-size: 18px;
+	font-size: 22px;
 	border-radius: 8px;
-	background-color: #e2f1ee;
+	background-color: #001100;
 	padding: 1px 5px;
-	border: 2px solid #e2f1ee;
-	transition: border-color 0.3s
+	border: 2px solid #4cb085;
+	transition: border-color 0.3s;
+	color: #e4ffe4;
 }
 
 .codeInput:focus {
-	border-color: #4cb085;
+	border-color: #6cfabc;
 	outline: none;
 }
 
@@ -79,7 +234,7 @@ body {
 	border-radius: 12px;
 	border: 1px solid #6dfdc0;
 	font-size: 23px;
-	margin: 30px auto 60px auto;
+	margin: 30px auto 50px auto;
 	display: block;
 	padding: 10px 15%;
 }
@@ -115,4 +270,267 @@ body {
 	cursor: pointer;
 	transform: scale(1.1);
 	opacity: 0.85;
+}
+
+/* =========================
+   Квадратики
+   ========================= */
+@media (max-aspect-ratio: 9/6) and (pointer: fine),
+(max-width: 1300px) and (min-aspect-ratio: 4/6) and (pointer: fine),
+(max-height: 660px) and (pointer: fine) {
+	body {
+		background-image: url("../../img/backgroundSmall.webp");
+	}
+	
+	.main {
+		align-items: center;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	
+	.panel {
+		margin-left: auto;
+	}
+	
+	@media (max-width: 970px) {
+		.mailIcon {
+			margin-top: 0;
+		}
+	}
+}
+
+/* =========================
+   Мобилки вертикаль
+   ========================= */
+@media (hover: none) and (pointer: coarse) and (max-aspect-ratio: 4/4) {
+	body {
+		background-image: url("../../img/backgroundSmall.webp");
+	}
+	
+	.main {
+		align-items: center;
+		margin-left: auto;
+		margin-right: auto;
+		width: 90%;
+	}
+	
+	.panel {
+		margin-left: 0;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	
+	.generalName {
+		font-size: 100px;
+	}
+	
+	.loginName {
+		font-size: 30px;
+	}
+	
+	.codeInput {
+		font-size: 50px;
+		border: 5px solid #4cb085;
+	}
+	
+	.loginButton {
+		border: 3px solid #6dfdc0;
+		font-size: 50px;
+		margin: 120px auto 50px auto;
+	}
+	
+	.loginButton:hover {
+		border: 3px solid #9fffd7;
+	}
+	
+	.joinTextUp, .joinTextDown {
+		font-size: 30px;
+	}
+	
+	.discordIcon, .telegramIcon {
+		width: 70px;
+	}
+	
+	.telegramIcon {
+		margin-left: 50px;
+	}
+	
+	.header {
+		border-bottom: 2px solid #6dfdc0;
+		height: 8ch;
+		padding: 15px;
+	}
+
+	.gsHubPanel {
+		border: 3px solid #6dfdc0;
+		border-radius: 35px;
+		max-width: 8ch;
+	}
+
+	.gsHubPanel:hover {
+		max-width: 300px;
+	}
+
+	.gsHubText {
+		font-size: 45px;
+	}
+
+	.gsVpnText {
+		font-size: 65px;
+		margin-top: 10px;
+	}
+
+	.gsVpnNamePanel {
+		margin-right: calc(50vw - 125.75px);
+	}
+	
+	.footer {
+		border-top: 3px solid #6dfdc0;
+		padding: 15px;
+		grid-template-columns: 1fr;
+		grid-template-rows: auto auto auto;
+		height: auto;
+		row-gap: 15px;
+	}
+	
+	.footerIconFile {
+		width: 50px;
+		height: 50px;
+		min-height: 50px;
+		min-width: 50px;
+	}
+	
+	.mailIcon {
+		margin-top: 0;
+	}
+	
+	.footerTextLink {
+		font-size: 40px;
+	}
+	
+	.footerText {
+		font-size: 30px;
+	}
+	
+	.footerTextContact {
+		font-size: 40px;
+	}
+}
+
+/* =========================
+   Мобилки горизонталь
+   ========================= */
+@media (hover: none) and (pointer: coarse) and (min-aspect-ratio: 10/9) {
+	body {
+		background-image: url("../../img/backgroundSmall.webp");
+	}
+	
+	.main {
+		align-items: center;
+		margin-left: auto;
+		margin-right: auto;
+		width: 90%;
+	}
+	
+	.panel {
+		margin-left: 0;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	
+	.generalName {
+		font-size: 100px;
+	}
+	
+	.loginName {
+		font-size: 30px;
+	}
+	
+	.codeInput {
+		font-size: 50px;
+		border: 5px solid #4cb085;
+	}
+	
+	.loginButton {
+		border: 3px solid #6dfdc0;
+		font-size: 50px;
+		margin: 120px auto 50px auto;
+	}
+	
+	.loginButton:hover {
+		border: 3px solid #9fffd7;
+	}
+	
+	.joinTextUp, .joinTextDown {
+		font-size: 30px;
+	}
+	
+	.discordIcon, .telegramIcon {
+		width: 70px;
+	}
+	
+	.telegramIcon {
+		margin-left: 50px;
+	}
+	
+	.header {
+		border-bottom: 2px solid #6dfdc0;
+		height: 8ch;
+		padding: 15px;
+	}
+
+	.gsHubPanel {
+		border: 3px solid #6dfdc0;
+		border-radius: 35px;
+		max-width: 8ch;
+	}
+
+	.gsHubPanel:hover {
+		max-width: 300px;
+	}
+
+	.gsHubText {
+		font-size: 45px;
+	}
+
+	.gsVpnText {
+		font-size: 65px;
+		margin-top: 10px;
+	}
+
+	.gsVpnNamePanel {
+		margin-right: calc(50vw - 125.75px);
+	}
+	
+	.footer {
+		border-top: 3px solid #6dfdc0;
+		padding: 15px;
+		grid-template-columns: 1fr;
+		grid-template-rows: auto auto auto;
+		height: auto;
+		row-gap: 15px;
+	}
+	
+	.footerIconFile {
+		width: 50px;
+		height: 50px;
+		min-height: 50px;
+		min-width: 50px;
+	}
+	
+	.mailIcon {
+		margin-top: 0;
+	}
+	
+	.footerTextLink {
+		font-size: 40px;
+	}
+	
+	.footerText {
+		font-size: 30px;
+	}
+	
+	.footerTextContact {
+		font-size: 40px;
+	}
 }
